@@ -1,0 +1,37 @@
+@import "@styles/index.scss";
+
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 8px;
+
+    width: 79px;
+    height: 44px;
+    left: 24px;
+    top: 369px;
+    border-radius: 4px;
+    border: 1.5px solid $purple100;
+
+    span {
+        font-family: $interface;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+
+        height: 20px;
+
+        color: $purple100;
+    }
+
+    &.purple {
+        background: $purple100;
+
+        span {
+            color: $white;
+        }
+    }
+}

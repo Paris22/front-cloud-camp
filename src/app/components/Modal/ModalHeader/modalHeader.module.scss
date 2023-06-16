@@ -1,0 +1,20 @@
+.header {
+    display: flex;
+    flex-direction: row;
+
+    padding: 0px;
+    gap: 8px;
+
+    height: 26px;
+
+    &.success {
+        justify-content: center;
+        align-items: center;
+        width: 396px;
+    }
+
+    &.error {
+        align-items: center;
+        width: 344px;
+    }
+}

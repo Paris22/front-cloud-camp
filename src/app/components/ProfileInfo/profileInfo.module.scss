@@ -1,0 +1,50 @@
+@import "@styles/index.scss";
+
+.profileHeader {
+    border-bottom: 1px solid $alpha8;
+
+    &__info {
+        display: flex;
+        align-items: center;
+        padding-bottom: 25px;
+    }
+
+    &__about {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+    }
+}
+
+.profileName {
+    font-family: $interface;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 26px;
+
+    color: $primaryG800;
+}
+
+.socials {
+    display: flex;
+    gap: 18px;
+
+    &__link {
+        display: flex;
+        flex-direction: row;
+        text-decoration: none;
+        gap: 5.6px;
+    }
+
+    &__text {
+        font-family: $interface;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+
+        color: $purple100;
+    }
+}
