@@ -1,7 +1,7 @@
 import { FC, memo } from "react"
 import cn from "classnames"
 
-import style from "./Button.module.scss"
+import style from "./button.module.scss"
 
 type TButtonProps = {
   id: string
