@@ -13,7 +13,7 @@ const ModalError: FC<TModalErrorProps> = ({ onClose }) => {
     <>
       <div className={style.header}>
         <span className={style.title}>Ошибка</span>
-        <button type="button" onClick={onClose}>
+        <button className={style.closeButton} type="button" onClick={onClose}>
           <img src={CloseIcon} alt="close-modal-icon" />
         </button>
       </div>

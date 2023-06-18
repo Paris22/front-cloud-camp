@@ -27,3 +27,10 @@
     align-items: center;
     justify-content: flex-end;
 }
+
+.closeButton {
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        transform: translateY(-0.25em);
+    }
+}

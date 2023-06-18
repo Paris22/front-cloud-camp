@@ -45,6 +45,7 @@ const FormAdvantages: FC<FormAdvantagesProps> = ({
               errors={errors}
             />
             <button
+              className={style.deleteButton}
               id={`button-remove-${index + 1}`}
               type="button"
               onClick={() => handleRemoveAdvantage(index)}
