@@ -1,35 +1,42 @@
-import { FC } from "react"
-import style from "./button.module.scss"
+import { FC, memo } from "react"
 import cn from "classnames"
-import { ButtonType, ButtonVariant } from "@/enums/button"
 
-type Props = {
-  id?: string
-  text: string
-  onClick: () => void
-  type?: Lowercase<keyof typeof ButtonType>
-  variant: Lowercase<keyof typeof ButtonVariant>
+import style from "./Button.module.scss"
+
+type TButtonProps = {
+  id: string
+  type: "button" | "submit" | "reset"
+  children: React.ReactNode | string
+  variant?: "contained" | "outlined"
+  onClick: (event?: React.MouseEvent<HTMLElement>) => void | unknown
+  disabled?: boolean
 }
 
-const Button: FC<Props> = ({
+const Button: FC<TButtonProps> = ({
   id,
-  text,
+  type,
+  variant,
+  children,
   onClick,
-  type = ButtonType.Button,
-  variant
+  disabled = false
 }) => {
+  const buttonClassName = cn(
+    style.container,
+    variant ? style[variant] : style.contained,
+    { [style.disabled]: disabled }
+  )
+
   return (
     <button
       id={id}
-      className={cn(style.button, {
-        [style.purple]: variant === ButtonVariant.Purple
-      })}
       type={type}
       onClick={onClick}
+      disabled={disabled}
+      className={buttonClassName}
     >
-      <span>{text}</span>
+      {children}
     </button>
   )
 }
 
-export default Button
+export default memo(Button)

@@ -1,5 +1,9 @@
 .container {
     margin-top: 24px;
+    @media screen and (max-width: 440px) {
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .form {
@@ -8,4 +12,12 @@
     padding: 0px;
     gap: 24px;
     margin-bottom: 48px;
+}
+
+.footer {
+    display: flex;
+    @media screen and (max-width: 440px) {
+        align-items: center;
+        justify-content: center;
+    }
 }

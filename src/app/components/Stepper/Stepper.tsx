@@ -1,37 +1,44 @@
 import CheckIcon from "@assets/checkIcon.svg"
-
-import styles from "./Stepper.module.scss"
+import cn from "classnames"
 import { useAppSelector } from "@/hooks/redux"
-import { tabsArray } from "@/helpers/constants/tabs"
+import { FC } from "react"
 
-const Stepper = () => {
+import style from "./Stepper.module.scss"
+
+type TStepperProps = {
+  stepsNumber: number
+}
+
+const Stepper: FC<TStepperProps> = ({ stepsNumber }) => {
   const activeTabIndex = useAppSelector(
-    state => state.tabsReducer.activeTabIndex
+    state => state.stepsReducer.activeStepIndex
   )
-  const steps = 3
+
+  const steps = [...Array(stepsNumber).keys()]
 
   return (
-    <div className={styles.root}>
-      {Array(steps)
-        .fill("")
-        .map((_, i) => (
+    <div className={style.container}>
+      {steps.map((step, i) => {
+        return (
           <div
-            className={`${styles.stepItem} ${
-              activeTabIndex === i + 1 && styles.active
-            } ${i + 1 < activeTabIndex && styles.complete}`}
-            key={i}
+            className={cn(style.stepItem, {
+              [style.active]: activeTabIndex === i,
+              [style.complete]: i < activeTabIndex
+            })}
+            key={step}
           >
-            <div className={styles.step}>
+            <div className={style.step}>
               <img
-                className={styles.iconComplete}
+                className={style.iconComplete}
                 src={CheckIcon}
-                alt="check-icon"
+                alt="checked-step-icon"
               />
             </div>
 
-            <p className={styles.label}>{i + 1}</p>
+            <p className={style.label}>{step + 1}</p>
           </div>
-        ))}
+        )
+      })}
     </div>
   )
 }

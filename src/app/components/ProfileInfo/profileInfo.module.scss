@@ -7,6 +7,12 @@
         display: flex;
         align-items: center;
         padding-bottom: 25px;
+        @media screen and (max-width: 440px) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
     }
 
     &__about {
@@ -14,12 +20,17 @@
         flex-direction: column;
         justify-content: center;
         gap: 8px;
+        @media screen and (max-width: 440px) {
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
     }
 }
 
 .profileName {
+    display: flex;
     font-family: $interface;
-    font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 26px;
@@ -40,8 +51,6 @@
 
     &__text {
         font-family: $interface;
-        font-style: normal;
-        font-weight: 400;
         font-size: 12px;
         line-height: 16px;
 

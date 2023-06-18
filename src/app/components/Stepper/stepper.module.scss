@@ -1,6 +1,6 @@
 @import "@styles/index.scss";
 
-.root {
+.container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 67px;
@@ -8,6 +8,12 @@
     margin-left: -166px;
     margin-right: -158px;
     position: sticky;
+
+    @media screen and (max-width: 440px) {
+        margin-bottom: 30px;
+        margin-left: -30px;
+        margin-right: -30px;
+    }
 }
 
 .label {

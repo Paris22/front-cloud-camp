@@ -1,61 +1,52 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import PhoneInput from "../FormComponents/FormInputs/FormPhoneInput/FormPhoneInput"
-import FormTextInput, {
-  InputType
-} from "../FormComponents/FormInputs/FormTextInput/FormTextInput"
-import { useForm, SubmitHandler } from "react-hook-form"
+import FormTextInput from "../FormComponents/FormInputs/FormTextInput/FormTextInput"
+import { useForm } from "react-hook-form"
 import { aboutMeSchema } from "@/helpers/validationSchemas/aboutMeSchema"
-import { useNavigate } from "react-router-dom"
-import { CREATE_FORM_ROUTE } from "@/routes/inboundRoutes"
+import { TAboutMeFormData } from "@/types/form"
+import Button from "../../Button/Button"
+import useFormNavigate from "@/hooks/useFormNavigate"
+import { useAppDispatch, useAppSelector } from "@/hooks/redux"
+import { aboutMeForm, formSelector } from "@/store/reducers/form/form"
 import style from "./formAboutMe.module.scss"
-
-type AboutMeFormData = {
-  email: string
-  phone: string
-}
+import { InputType } from "@/enums/input"
 
 const FormAboutMe = () => {
-  const navigate = useNavigate()
-
+  const dispatch = useAppDispatch()
+  const { email, phone } = useAppSelector(formSelector)
+  const { handleFormNav } = useFormNavigate()
   const {
     control,
-    handleSubmit,
+    getValues,
     watch,
     formState: { errors, isValid }
-  } = useForm<Partial<AboutMeFormData>>({
+  } = useForm<Partial<TAboutMeFormData>>({
     resolver: yupResolver(aboutMeSchema),
     mode: "onChange",
     defaultValues: {
-      email: "lvn1722@yandex.ru",
-      phone: "+7 (926) 550-72-25"
+      email: email || "",
+      phone: phone || ""
     }
   })
 
-  const handleNavForm = () => {
-    navigate(CREATE_FORM_ROUTE)
+  const handleSubmitToForm = (data: Partial<TAboutMeFormData>) => {
+    dispatch(aboutMeForm(data))
+    handleFormNav()
   }
 
-  const onSubmit: SubmitHandler<Partial<AboutMeFormData>> = (
-    data
-    // event: React.FormEvent<HTMLFormElement>
-  ) => {
-    // event.preventDefault()
-    handleNavForm()
-    console.log(data)
-  }
-
-  const phone = watch("phone")
+  const aboutMeData = getValues()
+  const phoneWatcher = watch("phone")
 
   return (
     <div className={style.container}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <div className={style.form}>
           <PhoneInput
             control={control}
             name="phone"
             label="Номер телефона"
             mask="+7 (999) 999-99-99"
-            value={phone}
+            value={phoneWatcher}
             errors={errors}
             disabled
           />
@@ -68,9 +59,16 @@ const FormAboutMe = () => {
             disabled
           />
         </div>
-        <button id="button-start" type="submit" disabled={!isValid}>
-          Начать
-        </button>
+        <div className={style.footer}>
+          <Button
+            id="button-start"
+            type="button"
+            disabled={!isValid}
+            onClick={() => handleSubmitToForm(aboutMeData)}
+          >
+            Начать
+          </Button>
+        </div>
       </form>
     </div>
   )

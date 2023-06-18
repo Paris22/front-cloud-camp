@@ -1,11 +1,15 @@
 @import "@styles/index.scss";
 
 .container {
-    max-width: 400px;
-    width: 400px;
+    max-width: 300px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 8px;
+
+    &__disabled {
+        max-width: 400px;
+    }
 }
 
 .input {
@@ -16,10 +20,8 @@
     border-radius: 4px;
 
     font-family: $interface;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
     line-height: 20px;
+
     &__disabled {
         color: $alpha48;
     }
@@ -27,28 +29,17 @@
 
 .label {
     font-family: $interface;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
     line-height: 20px;
 
     color: $primaryG800;
 }
 
 .tip {
+    height: 16px;
     padding: 0px;
-    gap: 16px;
-}
+    color: $alpha48;
 
-.errorMessage {
     font-family: $interface;
-    font-style: normal;
-    font-weight: 400;
     font-size: 12px;
     line-height: 16px;
-
-    display: flex;
-    align-items: center;
-
-    color: $alpha48;
 }

@@ -4,29 +4,38 @@ import {
   Controller,
   DeepMap,
   FieldError,
-  FieldValues,
-  useFormContext
+  FieldValues
 } from "react-hook-form"
 
-type FormTextAreaProps = {
+import style from "./formTextArea.module.scss"
+import {
+  ALLOWED_LETTERS_COUNT,
+  DEFAULT_TEXTAREA_PLACEHOLDER
+} from "./constants"
+import { FC } from "react"
+
+type TFormTextAreaProps = {
   control: Control
   errors: DeepMap<FieldValues, FieldError>
   name: string
+  label: string
+  value?: string
   placeholder?: string
 }
 
-const FormTextArea: React.FC<FormTextAreaProps> = ({
+const FormTextArea: FC<TFormTextAreaProps> = ({
   control,
   errors,
   name,
-  placeholder = "Placeholder"
+  label,
+  value,
+  placeholder
 }) => {
-  const { watch } = useFormContext()
-  const valueWatch = watch(name)
-  const lettersCount = valueWatch ? valueWatch.replace(spaces, "").length : 0
+  const lettersCount = value ? value.replace(spaces, "").length : 0
 
   return (
-    <div className="textArea-field">
+    <div className={style.container}>
+      <label htmlFor={`field-${name}`}>{label}</label>
       <Controller
         defaultValue=""
         control={control}
@@ -34,15 +43,21 @@ const FormTextArea: React.FC<FormTextAreaProps> = ({
         render={({ field }) => (
           <textarea
             {...field}
-            className="textArea-field__input"
-            placeholder={placeholder}
+            id={`field-${name}`}
+            value={value || ""}
+            className={style.textArea}
+            placeholder={placeholder || DEFAULT_TEXTAREA_PLACEHOLDER}
           />
         )}
       />
-      <span className="textArea-field__tip">
-        {errors[name] && errors[name].message.toString()}
-        {lettersCount}/200
-      </span>
+      <div className={style.tipContainer}>
+        <span className={style.tip}>
+          {errors[name] && errors[name].message.toString()}
+        </span>
+        <span className={style.tip}>
+          {lettersCount}/{ALLOWED_LETTERS_COUNT}
+        </span>
+      </div>
     </div>
   )
 }

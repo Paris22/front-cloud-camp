@@ -9,60 +9,67 @@ import {
 } from "react-hook-form"
 
 import style from "../../FormInputs/formInput.module.scss"
+import { DEFAULT_TEXT_PLACEHOLDER } from "./constants"
+import { InputType } from "@/enums/input"
 
-export enum InputType {
-  Text = "text",
-  Email = "email"
-}
-
-type TextInputProps = {
+type TTextInputProps = {
   control: Control
   name: keyof FieldValues
+  id?: string
   label?: string
   type: InputType.Text | InputType.Email
   placeholder?: string
   errors: DeepMap<FieldValues, FieldError>
   disabled?: boolean
+  isTipRequired?: boolean
 }
 
-const FormTextInput: FC<TextInputProps> = ({
+const FormTextInput: FC<TTextInputProps> = ({
   control,
   name,
   label,
+  id,
   type,
-  placeholder = "Placeholder",
+  placeholder,
   errors,
-  disabled = false
-}) => (
-  <div className={style.container}>
-    {label ? (
-      <label className={style.label} htmlFor={`field-${name}`}>
-        {label}
-      </label>
-    ) : null}
-    <Controller
-      defaultValue=""
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <input
-          id={`field-${name}`}
-          type={type}
-          {...field}
-          disabled={disabled}
-          placeholder={placeholder}
-          className={cn(style.input, {
-            [style.input__disabled]: disabled
-          })}
-        />
+  disabled = false,
+  isTipRequired = true
+}) => {
+  const validationError = errors[name]?.message?.toString()
+
+  return (
+    <div
+      className={cn(style.container, {
+        [style.container__disabled]: disabled
+      })}
+    >
+      {label ? (
+        <label className={style.label} htmlFor={`field-${name}`}>
+          {label}
+        </label>
+      ) : null}
+      <Controller
+        defaultValue=""
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <input
+            id={id || `field-${name}`}
+            type={type}
+            {...field}
+            disabled={disabled}
+            placeholder={placeholder || DEFAULT_TEXT_PLACEHOLDER}
+            className={cn(style.input, {
+              [style.input__disabled]: disabled
+            })}
+          />
+        )}
+      />
+      {!disabled && isTipRequired && (
+        <span className={style.tip}>{validationError}</span>
       )}
-    />
-    {errors[name] && (
-      <span className={(style.errorMessage, style.tip)}>
-        {errors[name].message?.toString()}
-      </span>
-    )}
-  </div>
-)
+    </div>
+  )
+}
 
 export default FormTextInput

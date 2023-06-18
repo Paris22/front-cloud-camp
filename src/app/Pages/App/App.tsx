@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
-import { routes } from "../../../routes/mainRoutes"
+import { routes } from "@/routes/mainRoutes"
 import style from "./app.module.scss"
+import Modal from "@/app/components/Modal/Modal"
 
 const renderRoutes = () =>
   routes.map(
@@ -18,6 +19,7 @@ function App() {
   return (
     <div className={style.content}>
       <Router>
+        <Modal />
         <Routes>{renderRoutes()}</Routes>
       </Router>
     </div>

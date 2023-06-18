@@ -1,30 +1,46 @@
 import { FC } from "react"
-import SuccessIcon from "@assets/successModal.svg"
-import style from "./modal.module.scss"
 import { ModalType } from "@/enums/modal"
-import ModalHeader from "./ModalHeader/ModalHeader"
-import ModalBody from "./ModalBody/ModalBody"
-import ModalFooter from "./ModalFooter/ModalFooter"
+import ModalSuccess from "./ModalSuccess/ModalSuccess"
+import ModalError from "./ModalError/ModalError"
+import useFormNavigate from "@/hooks/useFormNavigate"
+import { useAppDispatch, useAppSelector } from "@/hooks/redux"
+import { closeModal } from "@/store/reducers/modal/modal"
+import { resetForm } from "@store/reducers/form/form"
+import style from "./modal.module.scss"
 
-type ModalProps = {
-  isOpen: boolean
-  onClose: () => void
-  onHome: () => void
-  type: ModalType.Success | ModalType.Error
-}
+const Modal: FC = () => {
+  const dispatch = useAppDispatch()
+  const { handleMainNav, handleSelectStep } = useFormNavigate()
 
-const Modal: FC<ModalProps> = ({ onClose, onHome, isOpen, type }) => {
+  const isModalOpen = useAppSelector(state => state.modalReducer.isOpen)
+  const typeModal = useAppSelector(state => state.modalReducer.type)
+
+  const handleCloseModal = () => {
+    dispatch(closeModal())
+  }
+
+  const handleCloseSuccessModal = () => {
+    handleCloseModal()
+    handleMainNav()
+    handleSelectStep(0)
+    dispatch(resetForm())
+  }
+
   return (
-    isOpen && (
-      <div className={style.modal}>
-        <ModalHeader type={type} onClick={onClose} />
-        <ModalBody type={type} />
-        <ModalFooter
-          type={type}
-          onClick={type === ModalType.Success ? onHome : onClose}
-        />
-      </div>
-    )
+    <>
+      {isModalOpen && (
+        <div className={style.container}>
+          <div className={style.content}>
+            {typeModal === ModalType.Success && (
+              <ModalSuccess onClose={handleCloseSuccessModal} />
+            )}
+            {typeModal === ModalType.Error && (
+              <ModalError onClose={handleCloseModal} />
+            )}
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

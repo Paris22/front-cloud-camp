@@ -4,8 +4,15 @@ import {
   DeepMap,
   Controller,
   FieldError,
-  FieldValues
+  FieldValues,
+  ControllerRenderProps
 } from "react-hook-form"
+import cn from "classnames"
+import Select from "react-select"
+
+import style from "./formSelectInput.module.scss"
+import { customSelectStyles } from "./customStyles"
+import { DEFAULT_SELECT_PLACEHOLDER } from "./constants"
 
 type SelectInputProps = {
   control: Control
@@ -13,6 +20,8 @@ type SelectInputProps = {
   label: string
   options: Array<{ value: string; label: string; id: string }>
   errors: DeepMap<FieldValues, FieldError>
+  disabled?: boolean
+  placeholder?: string
 }
 
 const FormSelectInput: FC<SelectInputProps> = ({
@@ -20,28 +29,46 @@ const FormSelectInput: FC<SelectInputProps> = ({
   name,
   label,
   options,
-  errors
-}) => (
-  <div>
-    <label htmlFor={`field-${name}`}>{label}</label>
-    <Controller
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <select id={`field-${name}`} {...field}>
-          <option value="" disabled hidden>
-            Не выбрано
-          </option>
-          {options.map(option => (
-            <option key={option.value} value={option.value} id={option.id}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      )}
-    />
-    {errors[name] && <span>{errors[name].message?.toString()}</span>}
-  </div>
-)
+  errors,
+  disabled = false,
+  placeholder
+}) => {
+  const validationError = errors[name]?.message?.toString()
+  const findValue = (field: ControllerRenderProps<FieldValues, string>) =>
+    options.find(option => option.value === field.value)
+  return (
+    <div
+      className={cn(style.container, {
+        [style.container__disabled]: disabled
+      })}
+    >
+      <label className={style.label} htmlFor={`field-${name}`}>
+        {label}
+      </label>
+      <Controller
+        control={control}
+        defaultValue={options.map(option => option.value)}
+        name={name}
+        render={({ field }) => (
+          <Select
+            inputId={`field-${name}`}
+            className={style.input}
+            options={options}
+            value={findValue(field)}
+            onChange={selectedOption => field.onChange(selectedOption?.value)}
+            getOptionValue={option => option.value}
+            getOptionLabel={option => option.label}
+            placeholder={placeholder || DEFAULT_SELECT_PLACEHOLDER}
+            components={{
+              IndicatorSeparator: () => null
+            }}
+            styles={customSelectStyles}
+          />
+        )}
+      />
+      {!disabled && <span className={style.tip}>{validationError}</span>}
+    </div>
+  )
+}
 
 export default FormSelectInput

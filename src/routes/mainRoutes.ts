@@ -1,5 +1,5 @@
 import MainPage from "@/app/Pages/MainPage/MainPage"
-import Form from "@/app/components/Form/Form"
+import FormPage from "@app/Pages/FormPage/FormPage"
 import { TRouteItem } from "@/types/routing"
 import { CREATE_FORM_ROUTE, MAIN_ROUTE } from "./inboundRoutes"
 
@@ -12,6 +12,6 @@ export const routes: Array<TRouteItem> = [
   {
     path: CREATE_FORM_ROUTE,
     title: "ProfileForm",
-    component: Form
+    component: FormPage
   }
 ]

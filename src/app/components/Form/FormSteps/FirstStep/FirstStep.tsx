@@ -1,84 +1,48 @@
-import { Sex } from "@/enums/validation"
-import { useAppDispatch, useAppSelector } from "@/hooks/redux"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useForm, FormProvider } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import FormSelectInput from "../../FormComponents/FormInputs/FormSelectInput/FormSelectInput"
-import FormTextInput, {
-  InputType
-} from "../../FormComponents/FormInputs/FormTextInput/FormTextInput"
-import useTabChange from "@/hooks/useTabChange"
+import FormTextInput from "../../FormComponents/FormInputs/FormTextInput/FormTextInput"
+import useFormNavigate from "@/hooks/useFormNavigate"
 import { firstStepFormSchema } from "@/helpers/validationSchemas/firstStepFormSchema"
-import { nextTab, previousTab } from "@/store/tabs/tabs"
+import { TFirstStepFormData } from "@/types/form"
+import Button from "@/app/components/Button/Button"
+import style from "./firstStep.module.scss"
+import { useAppDispatch, useAppSelector } from "@/hooks/redux"
+import { firstStepForm, formSelector } from "@/store/reducers/form/form"
+import { SEX_OPTIONS, TEXT_INPUTS_FIRST_STEP } from "@/helpers/constants/form"
 
-export type FirstStepFormData = {
-  name: string
-  nickname: string
-  surname: string
-  sex: Sex.Man | Sex.Woman | ""
-}
-
-const Form = () => {
+const FirstStep = () => {
   const dispatch = useAppDispatch()
-  const methods = useForm()
+  const { name, nickname, surname, sex } = useAppSelector(formSelector)
+  const { handleMainNav, handleToNextStep } = useFormNavigate()
   const {
     control,
-    handleSubmit,
-    formState: { errors },
-    getValues
-  } = useForm<Partial<FirstStepFormData>>({
+    getValues,
+    formState: { errors, isValid }
+  } = useForm<Partial<TFirstStepFormData>>({
     resolver: yupResolver(firstStepFormSchema),
     mode: "onChange",
     defaultValues: {
-      name: "",
-      nickname: "",
-      surname: "",
-      sex: ""
+      name: name || "",
+      nickname: nickname || "",
+      surname: surname || "",
+      sex: sex || ""
     }
   })
 
-  const handleNextTab = () => {
-    dispatch(nextTab())
+  const handleSubmitToStep = (isNextStep: boolean) => {
+    const data = getValues()
+    dispatch(firstStepForm(data))
+    isNextStep ? handleToNextStep() : handleMainNav()
   }
-
-  const handlePreviousTab = () => {
-    dispatch(previousTab())
-  }
-
-  const onSubmit = (data: object) => {
-    const formValues = { ...getValues(), ...data }
-    console.log(formValues)
-  }
-
-  const sexOptions = [
-    { value: Sex.Man, label: Sex.Man, id: "field-sex-option-man" },
-    { value: Sex.Woman, label: Sex.Woman, id: "field-sex-option-woman" }
-  ]
-
-  const textInputsFirstStep = [
-    {
-      name: "nickname",
-      label: "Nickname",
-      type: InputType.Text
-    },
-    {
-      name: "name",
-      label: "Name",
-      type: InputType.Text
-    },
-    {
-      name: "surname",
-      label: "Surname",
-      type: InputType.Text
-    }
-  ]
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          {textInputsFirstStep.map((input, index) => (
+      <form>
+        <div className={style.form}>
+          {TEXT_INPUTS_FIRST_STEP.map(input => (
             <FormTextInput
-              key={index}
+              key={input.name}
               control={control}
               errors={errors}
               name={input.name}
@@ -90,21 +54,31 @@ const Form = () => {
             control={control}
             name="sex"
             label="Sex"
-            options={sexOptions}
+            options={SEX_OPTIONS}
             errors={errors}
           />
-          <div>
-            <button type="submit" onClick={handleNextTab}>
-              Далее
-            </button>
-            <button type="submit" onClick={handlePreviousTab}>
-              Назад
-            </button>
-          </div>
+        </div>
+        <div className={style.buttons}>
+          <Button
+            id="button-back"
+            type="button"
+            onClick={() => handleSubmitToStep(false)}
+            variant="outlined"
+          >
+            <span>Назад</span>
+          </Button>
+          <Button
+            id="button-next"
+            type="button"
+            onClick={() => handleSubmitToStep(true)}
+            disabled={!isValid}
+          >
+            <span>Вперед</span>
+          </Button>
         </div>
       </form>
     </div>
   )
 }
 
-export default Form
+export default FirstStep

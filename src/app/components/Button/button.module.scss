@@ -1,37 +1,36 @@
 @import "@styles/index.scss";
 
-.button {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 16px;
-    gap: 8px;
-
-    width: 79px;
-    height: 44px;
-    left: 24px;
-    top: 369px;
+.container {
     border-radius: 4px;
-    border: 1.5px solid $purple100;
+    padding: 12px 16px;
+}
 
-    span {
-        font-family: $interface;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 20px;
-
-        height: 20px;
-
-        color: $purple100;
+.contained {
+    background-color: $purple100;
+    color: $white;
+    &:hover {
+        box-shadow: 0 0.5em 0.5em -0.4em $primaryG800;
+        transform: translateY(-0.25em);
     }
+}
 
-    &.purple {
-        background: $purple100;
+.outlined {
+    border: 1.5px solid $purple100;
+    background-color: $white;
+    color: $purple100;
+    &:hover {
+        box-shadow: 0 0.5em 0.5em -0.4em $purple100;
+        transform: translateY(-0.25em);
+    }
+}
 
-        span {
-            color: $white;
-        }
+.disabled {
+    cursor: default;
+    background-color: $secondaryG600;
+    border-color: $secondaryG600;
+    color: $white;
+    &:hover {
+        box-shadow: none;
+        transform: none;
     }
 }

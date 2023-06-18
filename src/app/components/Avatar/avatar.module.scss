@@ -2,19 +2,19 @@
 
 .avatar {
     position: relative;
-    width: 80px;
     height: 80px;
-    margin-right: 24px;
-
-    background: $blueLight;
+    width: 80px;
     border-radius: 100px;
+    background-color: $blueLight;
+    margin-right: 24px;
+    @media screen and (max-width: 440px) {
+        margin-right: 0px;
+    }
 }
 
 .text {
     position: absolute;
     font-family: $text;
-    font-style: normal;
-    font-weight: 400;
     font-size: 40px;
     top: 50%;
     left: 50%;

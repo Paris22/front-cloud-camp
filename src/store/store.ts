@@ -1,14 +1,20 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import tabsReducer from "./tabs/tabs"
-import advantagesReducer from "./advantages/advantages"
+import stepsReducer from "./reducers/steps/steps"
+import formReducer from "./reducers/form/form"
+import modalReducer from "./reducers/modal/modal"
+import baseApi from "./services/baseApi"
 
 const reducer = combineReducers({
-  tabsReducer,
-  advantagesReducer
+  stepsReducer,
+  formReducer,
+  modalReducer,
+  [baseApi.reducerPath]: baseApi.reducer
 })
 
 const store = configureStore({
-  reducer
+  reducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(baseApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

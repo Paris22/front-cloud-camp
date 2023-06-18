@@ -1,0 +1,21 @@
+@import "@styles/index.scss";
+
+.container {
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__disabled {
+        max-width: 400px;
+    }
+}
+
+.label {
+    font-family: $interface;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: $primaryG800;
+    margin-bottom: 8px;
+}

@@ -1,0 +1,42 @@
+@import "@styles/index.scss";
+
+.container {
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label {
+    font-family: $interface;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: $primaryG800;
+}
+
+.textArea {
+    padding: 12px;
+    min-height: 84px;
+    height: 100%;
+    max-width: 680px;
+
+    border-radius: 4px;
+    border: 1px solid $alpha16;
+}
+
+.tipContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.tip {
+    height: 16px;
+    padding: 0px;
+    color: $alpha48;
+
+    font-family: $interface;
+    font-size: 12px;
+    line-height: 16px;
+}

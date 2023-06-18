@@ -1,0 +1,27 @@
+@import "@styles/index.scss";
+
+.header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.title {
+    font-family: $interface;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 26px;
+}
+
+.img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-bottom: 22px;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

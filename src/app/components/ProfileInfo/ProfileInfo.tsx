@@ -1,7 +1,6 @@
 import Avatar from "../Avatar/Avatar"
 import { Link } from "react-router-dom"
-import { TSocial } from "@/types/socials"
-import { socials } from "./helpers/constants"
+import { socials } from "./constants"
 import style from "./profileInfo.module.scss"
 
 const ProfileInfo = () => {
@@ -12,11 +11,11 @@ const ProfileInfo = () => {
         <div className={style.profileHeader__about}>
           <span className={style.profileName}>Латанов Владислав</span>
           <ul className={style.socials}>
-            {socials.map((social: TSocial) => (
+            {socials.map(social => (
               <li key={social.name}>
                 <Link to={social.link} className={style.socials__link}>
-                  <img src={social.img} alt="folder-icon" />
-                  <p className={style.socials__text}>{social.name}</p>
+                  <img src={social.img} alt="social-network-folder-icon" />
+                  <span className={style.socials__text}>{social.name}</span>
                 </Link>
               </li>
             ))}
