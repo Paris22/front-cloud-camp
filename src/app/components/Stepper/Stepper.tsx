@@ -3,7 +3,7 @@ import cn from "classnames"
 import { useAppSelector } from "@/hooks/redux"
 import { FC } from "react"
 
-import style from "./Stepper.module.scss"
+import style from "./stepper.module.scss"
 
 type TStepperProps = {
   stepsNumber: number
