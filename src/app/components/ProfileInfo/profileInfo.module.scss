@@ -47,6 +47,10 @@
         flex-direction: row;
         text-decoration: none;
         gap: 5.6px;
+        transition: all 0.2s ease-in-out;
+        &:hover {
+            transform: translateY(-0.1em);
+        }
     }
 
     &__text {
