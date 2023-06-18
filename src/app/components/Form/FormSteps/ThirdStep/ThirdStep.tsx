@@ -41,6 +41,10 @@ const ThirdStep = () => {
   const thirdStepData = getValues()
   const aboutWatcher = watch("about")
 
+  const radioGroupForBack = Number(radioGroup)
+  const checkboxGroupForBack = checkboxGroup.map(Number)
+  const advantagesForBack = advantages.map(advantage => advantage.advantage)
+
   const { handleSendForm } = useSendForm()
 
   const handleSubmitToStep = (isNextStep: boolean) => {
@@ -54,9 +58,9 @@ const ThirdStep = () => {
           surname,
           sex,
           nickname,
-          advantages,
-          radioGroup,
-          checkboxGroup,
+          advantages: advantagesForBack,
+          radioGroup: radioGroupForBack,
+          checkboxGroup: checkboxGroupForBack,
           about: thirdStepData.about
         })
       : handleToPreviousStep()

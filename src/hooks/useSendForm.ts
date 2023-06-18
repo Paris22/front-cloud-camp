@@ -1,6 +1,6 @@
 import { SubmitHandler } from "react-hook-form"
 import { useModal } from "./useModal"
-import { TFormDataState } from "@/types/form"
+import { TFormDataStateForBack } from "@/types/form"
 import { formApi } from "@/store/services/subApies/form"
 
 const useSendForm = () => {
@@ -8,8 +8,8 @@ const useSendForm = () => {
     formApi.useSendFormMutation()
   const { showSuccessModal, showErrorModal } = useModal()
 
-  const handleSendForm: SubmitHandler<Partial<TFormDataState>> = async (
-    formData: Partial<TFormDataState>,
+  const handleSendForm: SubmitHandler<Partial<TFormDataStateForBack>> = async (
+    formData: Partial<TFormDataStateForBack>,
     event
   ) => {
     event?.preventDefault()

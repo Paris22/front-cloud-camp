@@ -18,9 +18,20 @@ export type TSecondStepFormData = {
   radioGroup: number
 }
 
+export type TSecondStepFormDataForBack = {
+  advantages: Array<string>
+  checkboxGroup: Array<number>
+  radioGroup: number
+}
+
 export type TThirdStepFormData = {
   about: string
 }
+
+export type TFormDataStateForBack = TAboutMeFormData &
+  TFirstStepFormData &
+  TSecondStepFormDataForBack &
+  TThirdStepFormData
 
 export type TFormDataState = TAboutMeFormData &
   TFirstStepFormData &
